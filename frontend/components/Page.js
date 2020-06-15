@@ -6,6 +6,7 @@ import Meta from "../components/Meta";
 const theme = {
   blue: "#63B3ED",
   lightBlue: "#90CDF4",
+  green: "#4FD1C5",
   grey: "#CBD5E0",
   lightGrey: "#E2E8F0",
   darkGrey: "#1A202C",

@@ -25,6 +25,7 @@ const ItemStyles = styled.div`
     padding: 0 1rem;
     & > * {
       font-family: "Montserrat", sans-serif;
+      text-transform: uppercase;
       background: ${(props) => props.theme.darkGrey};
       color: white;
       border: 0;
