@@ -4,11 +4,12 @@ import Header from "../components/Header";
 import Meta from "../components/Meta";
 
 const theme = {
-  blue: "#63B3ED",
   lightBlue: "#90CDF4",
+  blue: "#63B3ED",
   green: "#4FD1C5",
-  grey: "#CBD5E0",
   lightGrey: "#E2E8F0",
+  grey: "#CBD5E0",
+  mediumGrey: "#718096",
   darkGrey: "#1A202C",
   offWhite: "#EDEDED",
   maxWidth: "1000px",

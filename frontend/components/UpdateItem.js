@@ -63,7 +63,7 @@ class UpdateItem extends Component {
       <Query query={SINGLE_ITEM_QUERY} variables={{ id: this.props.id }}>
         {({ data, loading }) => {
           if (loading) return <p>Loading...</p>;
-          if (!data.item) return <p>Item not found (ID {this.props.id})</p>;
+          if (!data.item) return <p>Item not found for ID: {this.props.id})</p>;
           return (
             <Mutation mutation={UPDATE_ITEM_MUTATION} variables={this.state}>
               {(updateItem, { loading, error }) => (
