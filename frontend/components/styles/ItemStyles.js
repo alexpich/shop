@@ -21,8 +21,10 @@ const ItemStyles = styled.div`
   }
   .buttonList {
     display: flex;
-    margin: 0 1rem;
-    padding: 0 1rem;
+    /* margin: 0 1rem;
+    padding: 0 1rem; */
+    margin: 0;
+    padding: 1rem 0 0 0;
     & > * {
       font-family: "Montserrat", sans-serif;
       text-transform: uppercase;
