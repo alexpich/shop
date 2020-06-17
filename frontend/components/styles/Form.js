@@ -50,19 +50,23 @@ const Form = styled.form`
       opacity: 0.5;
     }
     &::before {
-      width: 30px;
-      height: 30px;
+      width: 25px;
+      height: 25px;
+      box-sizing: border-box;
       content: "";
       display: block;
       visibility: hidden;
-      border: 4px solid ${(props) => props.theme.offWhite};
-      border-top: 4px solid ${(props) => props.theme.lightBlue};
+      border: solid 4px transparent;
+      border-top-color: ${(props) => props.theme.offWhite};
+      border-left-color: ${(props) => props.theme.lightBlue};
+      /* border: 4px solid ${(props) => props.theme.offWhite};
+      border-top: 4px solid ${(props) => props.theme.lightBlue}; */
       border-radius: 50%;
       margin-bottom: 10px;
     }
     &[aria-busy="true"]::before {
       visibility: visible;
-      animation: ${loading} 0.2s linear infinite;
+      animation: ${loading} 400ms linear infinite;
     }
   }
 `;

@@ -6,10 +6,21 @@ const ItemStyles = styled.div`
   display: flex;
   flex-direction: column;
 
+  @media (max-width: 576px) {
+    margin: auto;
+  }
+
   img {
     width: 100%;
-    height: 400px;
-    object-fit: cover;
+    max-width: 400px;
+    height: 300px;
+    object-fit: contain;
+    @media (max-width: 768px) {
+      height: 350px;
+    }
+    @media (max-width: 576px) {
+      height: 400px;
+    }
   }
   p {
     font-size: 12px;
@@ -32,8 +43,8 @@ const ItemStyles = styled.div`
       color: white;
       border: 0;
       margin-right: 1rem;
-      padding: 0.1rem 0.8rem;
-      font-size: 1.2rem;
+      padding: 0.2rem 1rem;
+      font-size: 1rem;
     }
   }
 `;
