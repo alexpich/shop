@@ -56,7 +56,6 @@ class SingleItem extends Component {
           if (error) return <ErrorMessage error={error} />;
           if (loading) return <p>Loading...</p>;
           if (!data.item) return <p>Item not found for ID: {this.props.id}</p>;
-          console.log(data);
           return (
             <SingleItemStyles>
               <Head>
