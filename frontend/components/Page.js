@@ -12,6 +12,8 @@ const theme = {
   mediumGrey: "#718096",
   darkGrey: "#1A202C",
   offWhite: "#EDEDED",
+  lightRed: "#FFF5F7",
+  red: "#E53E3E",
   maxWidth: "1000px",
   boxShadow: "0 12px 24px 0 rgba(0,0,0,0.07)",
 };

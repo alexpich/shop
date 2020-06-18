@@ -4,11 +4,11 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const ErrorStyles = styled.div`
-  padding: 2rem;
-  background: white;
+  padding: 1rem;
+  background: ${(props) => props.theme.lightRed};
+  color: ${(props) => props.theme.red};
   margin: 2rem 0;
   border: 1px solid rgba(0, 0, 0, 0.05);
-  border-left: 5px solid red;
   p {
     margin: 0;
     font-weight: 100;
