@@ -1,10 +1,12 @@
 import React from "react";
-import Link from "next/link";
+import PromptSignin from "../components/PromptSignin";
 import CreateItem from "../components/CreateItem";
 
 const Sell = (props) => (
   <div>
-    <CreateItem />
+    <PromptSignin>
+      <CreateItem />
+    </PromptSignin>
   </div>
 );
 
