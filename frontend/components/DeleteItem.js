@@ -37,7 +37,7 @@ class DeleteItem extends Component {
                   "Deleting is PERMANENT. Are you sure wou want to delete this item?"
                 )
               ) {
-                deleteItem();
+                deleteItem().catch((err) => alert(err.message));
               }
             }}
           >
