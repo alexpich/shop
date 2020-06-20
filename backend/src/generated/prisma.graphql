@@ -1,5 +1,9 @@
 # source: https://us1.prisma.sh/alex-pich-d2b0d0/shop/dev
-# timestamp: Thu Jun 18 2020 21:08:35 GMT-0700 (Pacific Daylight Time)
+# timestamp: Sat Jun 20 2020 03:13:34 GMT-0700 (Pacific Daylight Time)
+
+type AggregateBagItem {
+  count: Int!
+}
 
 type AggregateItem {
   count: Int!
@@ -7,6 +11,396 @@ type AggregateItem {
 
 type AggregateUser {
   count: Int!
+}
+
+type BagItem implements Node {
+  id: ID!
+  quantity: Int!
+  item: Item!
+  user: User!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A connection to a list of items."""
+type BagItemConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [BagItemEdge]!
+  aggregate: AggregateBagItem!
+}
+
+input BagItemCreateInput {
+  id: ID
+  quantity: Int
+  item: ItemCreateOneInput!
+  user: UserCreateOneWithoutBagInput!
+}
+
+input BagItemCreateManyWithoutUserInput {
+  create: [BagItemCreateWithoutUserInput!]
+  connect: [BagItemWhereUniqueInput!]
+}
+
+input BagItemCreateWithoutUserInput {
+  id: ID
+  quantity: Int
+  item: ItemCreateOneInput!
+}
+
+"""An edge in a connection."""
+type BagItemEdge {
+  """The item at the end of the edge."""
+  node: BagItem!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum BagItemOrderByInput {
+  id_ASC
+  id_DESC
+  quantity_ASC
+  quantity_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type BagItemPreviousValues {
+  id: ID!
+  quantity: Int!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+input BagItemScalarWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BagItemScalarWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BagItemScalarWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BagItemScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+}
+
+type BagItemSubscriptionPayload {
+  mutation: MutationType!
+  node: BagItem
+  updatedFields: [String!]
+  previousValues: BagItemPreviousValues
+}
+
+input BagItemSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BagItemSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BagItemSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BagItemSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: BagItemWhereInput
+}
+
+input BagItemUpdateInput {
+  quantity: Int
+  item: ItemUpdateOneRequiredInput
+  user: UserUpdateOneRequiredWithoutBagInput
+}
+
+input BagItemUpdateManyDataInput {
+  quantity: Int
+}
+
+input BagItemUpdateManyMutationInput {
+  quantity: Int
+}
+
+input BagItemUpdateManyWithoutUserInput {
+  create: [BagItemCreateWithoutUserInput!]
+  connect: [BagItemWhereUniqueInput!]
+  set: [BagItemWhereUniqueInput!]
+  disconnect: [BagItemWhereUniqueInput!]
+  delete: [BagItemWhereUniqueInput!]
+  update: [BagItemUpdateWithWhereUniqueWithoutUserInput!]
+  updateMany: [BagItemUpdateManyWithWhereNestedInput!]
+  deleteMany: [BagItemScalarWhereInput!]
+  upsert: [BagItemUpsertWithWhereUniqueWithoutUserInput!]
+}
+
+input BagItemUpdateManyWithWhereNestedInput {
+  where: BagItemScalarWhereInput!
+  data: BagItemUpdateManyDataInput!
+}
+
+input BagItemUpdateWithoutUserDataInput {
+  quantity: Int
+  item: ItemUpdateOneRequiredInput
+}
+
+input BagItemUpdateWithWhereUniqueWithoutUserInput {
+  where: BagItemWhereUniqueInput!
+  data: BagItemUpdateWithoutUserDataInput!
+}
+
+input BagItemUpsertWithWhereUniqueWithoutUserInput {
+  where: BagItemWhereUniqueInput!
+  update: BagItemUpdateWithoutUserDataInput!
+  create: BagItemCreateWithoutUserInput!
+}
+
+input BagItemWhereInput {
+  """Logical AND on all given filters."""
+  AND: [BagItemWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [BagItemWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [BagItemWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  quantity: Int
+
+  """All values that are not equal to given value."""
+  quantity_not: Int
+
+  """All values that are contained in given list."""
+  quantity_in: [Int!]
+
+  """All values that are not contained in given list."""
+  quantity_not_in: [Int!]
+
+  """All values less than the given value."""
+  quantity_lt: Int
+
+  """All values less than or equal the given value."""
+  quantity_lte: Int
+
+  """All values greater than the given value."""
+  quantity_gt: Int
+
+  """All values greater than or equal the given value."""
+  quantity_gte: Int
+  createdAt: DateTime
+
+  """All values that are not equal to given value."""
+  createdAt_not: DateTime
+
+  """All values that are contained in given list."""
+  createdAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  createdAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  createdAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  createdAt_lte: DateTime
+
+  """All values greater than the given value."""
+  createdAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+
+  """All values that are not equal to given value."""
+  updatedAt_not: DateTime
+
+  """All values that are contained in given list."""
+  updatedAt_in: [DateTime!]
+
+  """All values that are not contained in given list."""
+  updatedAt_not_in: [DateTime!]
+
+  """All values less than the given value."""
+  updatedAt_lt: DateTime
+
+  """All values less than or equal the given value."""
+  updatedAt_lte: DateTime
+
+  """All values greater than the given value."""
+  updatedAt_gt: DateTime
+
+  """All values greater than or equal the given value."""
+  updatedAt_gte: DateTime
+  item: ItemWhereInput
+  user: UserWhereInput
+}
+
+input BagItemWhereUniqueInput {
+  id: ID
 }
 
 type BatchPayload {
@@ -23,7 +417,7 @@ type Item implements Node {
   image: String
   largeImage: String
   price: Int!
-  user: User
+  user: User!
   createdAt: DateTime!
 }
 
@@ -44,7 +438,12 @@ input ItemCreateInput {
   image: String
   largeImage: String
   price: Int!
-  user: UserCreateOneInput
+  user: UserCreateOneInput!
+}
+
+input ItemCreateOneInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
 }
 
 """An edge in a connection."""
@@ -122,13 +521,22 @@ input ItemSubscriptionWhereInput {
   node: ItemWhereInput
 }
 
+input ItemUpdateDataInput {
+  title: String
+  description: String
+  image: String
+  largeImage: String
+  price: Int
+  user: UserUpdateOneRequiredInput
+}
+
 input ItemUpdateInput {
   title: String
   description: String
   image: String
   largeImage: String
   price: Int
-  user: UserUpdateOneInput
+  user: UserUpdateOneRequiredInput
 }
 
 input ItemUpdateManyMutationInput {
@@ -137,6 +545,18 @@ input ItemUpdateManyMutationInput {
   image: String
   largeImage: String
   price: Int
+}
+
+input ItemUpdateOneRequiredInput {
+  create: ItemCreateInput
+  connect: ItemWhereUniqueInput
+  update: ItemUpdateDataInput
+  upsert: ItemUpsertNestedInput
+}
+
+input ItemUpsertNestedInput {
+  update: ItemUpdateDataInput!
+  create: ItemCreateInput!
 }
 
 input ItemWhereInput {
@@ -406,18 +826,24 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createItem(data: ItemCreateInput!): Item!
+  createBagItem(data: BagItemCreateInput!): BagItem!
   createUser(data: UserCreateInput!): User!
-  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  createItem(data: ItemCreateInput!): Item!
+  updateBagItem(data: BagItemUpdateInput!, where: BagItemWhereUniqueInput!): BagItem
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteItem(where: ItemWhereUniqueInput!): Item
+  updateItem(data: ItemUpdateInput!, where: ItemWhereUniqueInput!): Item
+  deleteBagItem(where: BagItemWhereUniqueInput!): BagItem
   deleteUser(where: UserWhereUniqueInput!): User
-  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  deleteItem(where: ItemWhereUniqueInput!): Item
+  upsertBagItem(where: BagItemWhereUniqueInput!, create: BagItemCreateInput!, update: BagItemUpdateInput!): BagItem!
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  upsertItem(where: ItemWhereUniqueInput!, create: ItemCreateInput!, update: ItemUpdateInput!): Item!
+  updateManyBagItems(data: BagItemUpdateManyMutationInput!, where: BagItemWhereInput): BatchPayload!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  deleteManyItems(where: ItemWhereInput): BatchPayload!
+  updateManyItems(data: ItemUpdateManyMutationInput!, where: ItemWhereInput): BatchPayload!
+  deleteManyBagItems(where: BagItemWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
+  deleteManyItems(where: ItemWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -457,12 +883,15 @@ enum Permission {
 }
 
 type Query {
-  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  bagItems(where: BagItemWhereInput, orderBy: BagItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BagItem]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  item(where: ItemWhereUniqueInput!): Item
+  items(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Item]!
+  bagItem(where: BagItemWhereUniqueInput!): BagItem
   user(where: UserWhereUniqueInput!): User
-  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
+  item(where: ItemWhereUniqueInput!): Item
+  bagItemsConnection(where: BagItemWhereInput, orderBy: BagItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BagItemConnection!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  itemsConnection(where: ItemWhereInput, orderBy: ItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ItemConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -472,8 +901,9 @@ type Query {
 }
 
 type Subscription {
-  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
+  bagItem(where: BagItemSubscriptionWhereInput): BagItemSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+  item(where: ItemSubscriptionWhereInput): ItemSubscriptionPayload
 }
 
 type User implements Node {
@@ -484,6 +914,7 @@ type User implements Node {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission!]!
+  bag(where: BagItemWhereInput, orderBy: BagItemOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BagItem!]
 }
 
 """A connection to a list of items."""
@@ -504,6 +935,7 @@ input UserCreateInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserCreatepermissionsInput
+  bag: BagItemCreateManyWithoutUserInput
 }
 
 input UserCreateOneInput {
@@ -511,8 +943,23 @@ input UserCreateOneInput {
   connect: UserWhereUniqueInput
 }
 
+input UserCreateOneWithoutBagInput {
+  create: UserCreateWithoutBagInput
+  connect: UserWhereUniqueInput
+}
+
 input UserCreatepermissionsInput {
   set: [Permission!]
+}
+
+input UserCreateWithoutBagInput {
+  id: ID
+  name: String!
+  email: String!
+  password: String!
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserCreatepermissionsInput
 }
 
 """An edge in a connection."""
@@ -595,6 +1042,7 @@ input UserUpdateDataInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  bag: BagItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateInput {
@@ -604,6 +1052,7 @@ input UserUpdateInput {
   resetToken: String
   resetTokenExpiry: Float
   permissions: UserUpdatepermissionsInput
+  bag: BagItemUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
@@ -615,22 +1064,41 @@ input UserUpdateManyMutationInput {
   permissions: UserUpdatepermissionsInput
 }
 
-input UserUpdateOneInput {
+input UserUpdateOneRequiredInput {
   create: UserCreateInput
   connect: UserWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
   update: UserUpdateDataInput
   upsert: UserUpsertNestedInput
+}
+
+input UserUpdateOneRequiredWithoutBagInput {
+  create: UserCreateWithoutBagInput
+  connect: UserWhereUniqueInput
+  update: UserUpdateWithoutBagDataInput
+  upsert: UserUpsertWithoutBagInput
 }
 
 input UserUpdatepermissionsInput {
   set: [Permission!]
 }
 
+input UserUpdateWithoutBagDataInput {
+  name: String
+  email: String
+  password: String
+  resetToken: String
+  resetTokenExpiry: Float
+  permissions: UserUpdatepermissionsInput
+}
+
 input UserUpsertNestedInput {
   update: UserUpdateDataInput!
   create: UserCreateInput!
+}
+
+input UserUpsertWithoutBagInput {
+  update: UserUpdateWithoutBagDataInput!
+  create: UserCreateWithoutBagInput!
 }
 
 input UserWhereInput {
@@ -864,6 +1332,9 @@ input UserWhereInput {
 
   """All values greater than or equal the given value."""
   resetTokenExpiry_gte: Float
+  bag_every: BagItemWhereInput
+  bag_some: BagItemWhereInput
+  bag_none: BagItemWhereInput
 }
 
 input UserWhereUniqueInput {

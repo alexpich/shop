@@ -10,6 +10,7 @@ const MainButton = styled.span`
   text-transform: uppercase;
   padding: 0.5rem 1.2rem;
   cursor: pointer;
+  text-align: center;
   &[disabled] {
     opacity: 0.5;
   }

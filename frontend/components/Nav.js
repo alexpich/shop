@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import { Mutation } from "react-apollo";
+import { TOGGLE_BAG_MUTATION } from "../components/Bag";
 import NavStyles from "../components/styles/NavStyles";
 import User from "../components/User";
 import Signout from "../components/Signout";
@@ -24,6 +26,11 @@ const Nav = () => (
               <a>Account</a>
             </Link>
             <Signout />
+
+            {/* TODO: Replace with a shopping bag icon */}
+            <Mutation mutation={TOGGLE_BAG_MUTATION}>
+              {(toggleBag) => <button onClick={toggleBag}>Bag</button>}
+            </Mutation>
           </>
         )}
 

@@ -21,7 +21,7 @@ const fakeUser = () => ({
   email: casual.email,
   permissions: ['ADMIN'],
   orders: [],
-  cart: [],
+  bag: [],
 });
 
 const fakeOrderItem = () => ({
@@ -44,8 +44,8 @@ const fakeOrder = () => ({
   user: fakeUser(),
 });
 
-const fakeCartItem = overrides => ({
-  __typename: 'CartItem',
+const fakeBagItem = overrides => ({
+  __typename: 'BagItem',
   id: 'omg123',
   quantity: 3,
   item: fakeItem(),
@@ -80,7 +80,7 @@ export {
   LocalStorageMock,
   fakeItem,
   fakeUser,
-  fakeCartItem,
+  fakeBagItem,
   fakeOrder,
   fakeOrderItem,
 };

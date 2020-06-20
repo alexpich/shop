@@ -15,6 +15,7 @@ type User {
   resetToken: String
   resetTokenExpiry: Float
   permissions: [Permission] @scalarList(strategy: RELATION)
+  bag: [BagItem!]!
 }
 
 type Item {
@@ -26,4 +27,13 @@ type Item {
   price: Int!
   user: User!
   createdAt: DateTime! @createdAt
+}
+
+type BagItem {
+  id: ID! @id @unique
+  quantity: Int! @default(value: 1)
+  item: Item!
+  user: User!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

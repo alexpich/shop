@@ -206,6 +206,47 @@ const Mutations = {
       info
     );
   },
+  async addToBag(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    if (!userId) {
+      throw new Error("You must be logged in to do that!");
+    }
+
+    const [existingBagItem] = await ctx.db.query.bagItems({
+      where: {
+        user: { id: userId },
+        item: { id: args.id },
+      },
+    });
+
+    if (existingBagItem) {
+      console.log("The item is already in their bag.");
+      return ctx.db.mutation.updateBagItem(
+        {
+          where: { id: existingBagItem.id },
+          data: { quantity: existingBagItem.quantity + 1 },
+        },
+        info
+      );
+    }
+
+    return ctx.db.mutation.createBagItem({
+      data: {
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+        item: {
+          connect: {
+            id: args.id,
+          },
+        },
+      },
+      info,
+    });
+  },
 };
 
 module.exports = Mutations;
