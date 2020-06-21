@@ -25,6 +25,7 @@ type Mutation {
   ): User!
   updatePermissions(permissions: [Permission], userId: ID!): User
   addToBag(id: ID!): BagItem
+  removeFromBag(id: ID!) :BagItem
 }
 
 type Query {

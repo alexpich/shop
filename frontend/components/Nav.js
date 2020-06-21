@@ -5,6 +5,7 @@ import { TOGGLE_BAG_MUTATION } from "../components/Bag";
 import NavStyles from "../components/styles/NavStyles";
 import User from "../components/User";
 import Signout from "../components/Signout";
+import BagCount from "../components/BagCount";
 
 const Nav = () => (
   <User>
@@ -29,7 +30,17 @@ const Nav = () => (
 
             {/* TODO: Replace with a shopping bag icon */}
             <Mutation mutation={TOGGLE_BAG_MUTATION}>
-              {(toggleBag) => <button onClick={toggleBag}>Bag</button>}
+              {(toggleBag) => (
+                <button onClick={toggleBag}>
+                  Bag{" "}
+                  <BagCount
+                    count={me.bag.reduce(
+                      (i, bagItem) => i + bagItem.quantity,
+                      0
+                    )}
+                  />
+                </button>
+              )}
             </Mutation>
           </>
         )}

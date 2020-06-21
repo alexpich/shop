@@ -33,7 +33,7 @@ function createClient({ headers }) {
         },
       },
       defaults: {
-        bagOpen: true,
+        bagOpen: false,
       },
     },
   });

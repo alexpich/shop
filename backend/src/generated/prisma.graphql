@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/alex-pich-d2b0d0/shop/dev
-# timestamp: Sat Jun 20 2020 03:13:34 GMT-0700 (Pacific Daylight Time)
+# timestamp: Sat Jun 20 2020 17:54:00 GMT-0700 (Pacific Daylight Time)
 
 type AggregateBagItem {
   count: Int!
@@ -16,7 +16,7 @@ type AggregateUser {
 type BagItem implements Node {
   id: ID!
   quantity: Int!
-  item: Item!
+  item: Item
   user: User!
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -35,7 +35,7 @@ type BagItemConnection {
 input BagItemCreateInput {
   id: ID
   quantity: Int
-  item: ItemCreateOneInput!
+  item: ItemCreateOneInput
   user: UserCreateOneWithoutBagInput!
 }
 
@@ -47,7 +47,7 @@ input BagItemCreateManyWithoutUserInput {
 input BagItemCreateWithoutUserInput {
   id: ID
   quantity: Int
-  item: ItemCreateOneInput!
+  item: ItemCreateOneInput
 }
 
 """An edge in a connection."""
@@ -235,7 +235,7 @@ input BagItemSubscriptionWhereInput {
 
 input BagItemUpdateInput {
   quantity: Int
-  item: ItemUpdateOneRequiredInput
+  item: ItemUpdateOneInput
   user: UserUpdateOneRequiredWithoutBagInput
 }
 
@@ -266,7 +266,7 @@ input BagItemUpdateManyWithWhereNestedInput {
 
 input BagItemUpdateWithoutUserDataInput {
   quantity: Int
-  item: ItemUpdateOneRequiredInput
+  item: ItemUpdateOneInput
 }
 
 input BagItemUpdateWithWhereUniqueWithoutUserInput {
@@ -547,9 +547,11 @@ input ItemUpdateManyMutationInput {
   price: Int
 }
 
-input ItemUpdateOneRequiredInput {
+input ItemUpdateOneInput {
   create: ItemCreateInput
   connect: ItemWhereUniqueInput
+  disconnect: Boolean
+  delete: Boolean
   update: ItemUpdateDataInput
   upsert: ItemUpsertNestedInput
 }

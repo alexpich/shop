@@ -247,6 +247,32 @@ const Mutations = {
       info,
     });
   },
+  async removeFromBag(parent, args, ctx, info) {
+    // find the bag item
+    const bagItem = await ctx.db.query.bagItem(
+      {
+        where: {
+          id: args.id,
+        },
+      },
+      `{ id, user { id }}`
+    );
+
+    // make sure we find an item
+    if (!bagItem) throw new Error("No bag item found.");
+
+    // make sure they own that bag item
+    if (bagItem.user.id !== ctx.request.userId)
+      throw new Error("You aren't authorized to delete that item");
+
+    // delete that bag item
+    return ctx.db.mutation.deleteBagItem(
+      {
+        where: { id: args.id },
+      },
+      info
+    );
+  },
 };
 
 module.exports = Mutations;
