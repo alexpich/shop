@@ -2,13 +2,14 @@ import React from "react";
 import { Query, Mutation } from "react-apollo";
 import { adopt } from "react-adopt";
 import gql from "graphql-tag";
+import calcTotalPrice from "../lib/calcTotalPrice";
+import formatMoney from "../lib/formatMoney";
 import BagStyles from "./styles/BagStyles";
 import MainButton from "./styles/MainButton";
 import CloseButton from "./styles/CloseButton";
 import User, { CURRENT_USER_QUERY } from "./User";
 import BagItem from "./BagItem";
-import calcTotalPrice from "../lib/calcTotalPrice";
-import formatMoney from "../lib/formatMoney";
+import Payment from "./Payment";
 
 const LOCAL_STATE_QUERY = gql`
   query LOCAL_STATE_QUERY {
@@ -58,7 +59,9 @@ const Bag = () => (
 
           <footer>
             <p>{formatMoney(calcTotalPrice(me.bag))}</p>
-            <MainButton>CHECK OUT</MainButton>
+            <Payment>
+              <MainButton>CHECK OUT</MainButton>
+            </Payment>
           </footer>
         </BagStyles>
       );

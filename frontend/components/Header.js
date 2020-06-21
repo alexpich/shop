@@ -24,8 +24,7 @@ const Logo = styled.h1`
   z-index: 2;
   a {
     padding: 0.5rem 1 rem;
-    background: ${(props) => props.theme.blue};
-    color: white;
+    color: ${(props) => props.theme.darkGrey};
     text-transform: uppercase;
     text-decoration: none;
   }
