@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import Router from "next/router";
 import Form from "./styles/Form";
 import ErrorMessage from "../components/ErrorMessage";
 import { CURRENT_USER_QUERY } from "./User";
@@ -42,9 +43,11 @@ class Signup extends Component {
             method="post"
             onSubmit={async (e) => {
               e.preventDefault();
-              const res = await signup();
-              (res);
+              await signup();
               this.setState({ email: "", password: "", name: "" });
+              Router.push({
+                pathname: "/",
+              });
             }}
           >
             <fieldset disabled={loading} aria-busy={loading}>

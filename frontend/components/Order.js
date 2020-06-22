@@ -55,10 +55,6 @@ class Order extends Component {
                 <span> {format(order.createdAt, "MMMM d, YYYY h:mm a")}</span>
               </p>
               <p>
-                <span>Charge</span>
-                <span> {order.charge}</span>
-              </p>
-              <p>
                 <span>Qty</span>
                 <span> {order.items.length}</span>
               </p>
