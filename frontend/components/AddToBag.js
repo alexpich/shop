@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
+import styled from "styled-components";
 import { CURRENT_USER_QUERY } from "./User";
 
 const ADD_TO_BAG_MUTATION = gql`

@@ -13,6 +13,7 @@ const MainButton = styled.span`
   text-align: center;
   &[disabled] {
     opacity: 0.5;
+    background: ${(props) => props.theme.grey};
   }
 `;
 
