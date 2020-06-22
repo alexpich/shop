@@ -59,9 +59,11 @@ const Bag = () => (
 
           <footer>
             <p>{formatMoney(calcTotalPrice(me.bag))}</p>
-            <Payment>
-              <MainButton>CHECK OUT</MainButton>
-            </Payment>
+            {me.bag.length && (
+              <Payment>
+                <MainButton>CHECK OUT</MainButton>
+              </Payment>
+            )}
           </footer>
         </BagStyles>
       );

@@ -4,6 +4,7 @@ const { randomBytes } = require("crypto");
 const { promisify } = require("util");
 const { transport, emailTemplate } = require("../mail");
 const { hasPermission } = require("../utils");
+const stripe = require("../stripe");
 
 const Mutations = {
   async createItem(parent, args, ctx, info) {
@@ -55,7 +56,7 @@ const Mutations = {
       ["ADMIN", "ITEMDELETE"].includes(permission)
     );
 
-    if (!ownsItem && hasPermissions) {
+    if (!ownsItem && !hasPermissions) {
       throw new Error("You have insufficient permissions to do that.");
     }
 
@@ -177,7 +178,7 @@ const Mutations = {
     return updatedUser;
   },
   async updatePermissions(parent, args, ctx, info) {
-    if (!ctx.request.user) {
+    if (!ctx.request.userId) {
       throw new Error("You must be logged in to do that!");
     }
 
@@ -231,21 +232,23 @@ const Mutations = {
       );
     }
 
-    return ctx.db.mutation.createBagItem({
-      data: {
-        user: {
-          connect: {
-            id: userId,
+    return ctx.db.mutation.createBagItem(
+      {
+        data: {
+          user: {
+            connect: {
+              id: userId,
+            },
           },
-        },
-        item: {
-          connect: {
-            id: args.id,
+          item: {
+            connect: {
+              id: args.id,
+            },
           },
         },
       },
-      info,
-    });
+      info
+    );
   },
   async removeFromBag(parent, args, ctx, info) {
     // find the bag item
@@ -263,7 +266,7 @@ const Mutations = {
 
     // make sure they own that bag item
     if (bagItem.user.id !== ctx.request.userId)
-      throw new Error("You aren't authorized to delete that item");
+      throw new Error("You aren't authorized to delete that item.");
 
     // delete that bag item
     return ctx.db.mutation.deleteBagItem(
@@ -272,6 +275,86 @@ const Mutations = {
       },
       info
     );
+  },
+  async createOrder(parent, args, ctx, info) {
+    // query the current user and make sure logged in
+    const { userId } = ctx.request;
+    if (!userId)
+      throw new Error("You must be signed in to complete this order.");
+    const user = await ctx.db.query.user(
+      { where: { id: userId } },
+      `{ 
+        id
+        name 
+        email 
+        bag { 
+          id
+          quantity
+          item { 
+            title 
+            price 
+            id 
+            description 
+            image
+            largeImage
+          }
+        }
+      }`
+    );
+
+    // recalc the total for price
+    const amount = user.bag.reduce(
+      (tally, bagItem) => tally + bagItem.item.price * bagItem.quantity,
+      0
+    );
+    console.log(`Charging ${amount}`);
+
+    // create the stripe charge (turn token into $)
+    const charge = await stripe.charges.create({
+      amount: amount,
+      currency: "USD",
+      source: args.token,
+    });
+
+    // convert the BagItems to OrderItems
+    const orderItems = user.bag.map((bagItem) => {
+      const orderItem = {
+        ...bagItem.item,
+        quantity: bagItem.quantity,
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      };
+      delete orderItem.id;
+      return orderItem;
+    });
+
+    // create the order
+    const order = await ctx.db.mutation.createOrder({
+      data: {
+        total: charge.amount,
+        charge: charge.id,
+        items: { create: orderItems },
+        user: {
+          connect: {
+            id: userId,
+          },
+        },
+      },
+    });
+
+    // clean up - clear the users cart
+    const bagItemIds = user.bag.map((bagItem) => bagItem.id);
+    await ctx.db.mutation.deleteManyBagItems({
+      where: {
+        id_in: bagItemIds,
+      },
+    });
+
+    // return the order to the client
+    return order;
   },
 };
 

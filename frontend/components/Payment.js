@@ -9,31 +9,64 @@ import calcTotalPrice from "../lib/calcTotalPrice";
 import ErrorMessage from "./ErrorMessage";
 import User, { CURRENT_USER_QUERY } from "./User";
 
+const CREATE_ORDER_MUTATION = gql`
+  mutation createOrder($token: String!) {
+    createOrder(token: $token) {
+      id
+      charge
+      total
+      items {
+        id
+        title
+      }
+    }
+  }
+`;
+
 function totalItems(bag) {
   return bag.reduce((tally, bagItem) => tally + bagItem.quantity, 0);
 }
 
 class Payment extends Component {
-  onToken = (res) => {
-    console.log(res);
+  onToken = async (res, createOrder) => {
+    NProgress.start();
+    // manually call the mutation once we have the stripe token
+    const order = await createOrder({
+      variables: {
+        token: res.id,
+      },
+    }).catch((err) => {
+      alert(err.message);
+    });
+    Router.push({
+      pathname: "/order",
+      query: { id: order.data.createOrder.id },
+    });
   };
 
   render() {
     return (
       <User>
         {({ data: { me } }) => (
-          <StripeCheckout
-            amount={calcTotalPrice(me.bag)}
-            name="Shop"
-            description={`${totalItems(me.bag)} Items`}
-            image={me.bag[0].item && me.bag[0].item.image}
-            stripeKey="pk_test_51GwMUvLVsO2imhyhae9LQUxKvAUFW1sWDTwlpSruVpuAW7stFxBWYEpnhaaT5hzruMzeC9MU0fqTgkxL3xCNmfB700CyNDwGFj"
-            currency="USD"
-            email={me.email}
-            token={(res) => this.onToken(res)}
+          <Mutation
+            mutation={CREATE_ORDER_MUTATION}
+            refetchQueries={[{ query: CURRENT_USER_QUERY }]}
           >
-            {this.props.children}
-          </StripeCheckout>
+            {(createOrder) => (
+              <StripeCheckout
+                amount={calcTotalPrice(me.bag)}
+                name="Shop"
+                description={`${totalItems(me.bag)} Items`}
+                image={me.bag.length && me.bag[0].item && me.bag[0].item.image}
+                stripeKey="pk_test_51GwMUvLVsO2imhyhae9LQUxKvAUFW1sWDTwlpSruVpuAW7stFxBWYEpnhaaT5hzruMzeC9MU0fqTgkxL3xCNmfB700CyNDwGFj"
+                currency="USD"
+                email={me.email}
+                token={(res) => this.onToken(res, createOrder)}
+              >
+                {this.props.children}
+              </StripeCheckout>
+            )}
+          </Mutation>
         )}
       </User>
     );
