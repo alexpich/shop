@@ -93,7 +93,7 @@ const Mutations = {
   async signin(parent, { email, password }, ctx, info) {
     const user = await ctx.db.query.user({ where: { email: email } });
     if (!user) {
-      throw new Error(`No user found with email: ${email}`);
+      throw new Error(`No user found.`);
     }
 
     const valid = await bcrypt.compare(password, user.password);
@@ -117,7 +117,7 @@ const Mutations = {
   async requestReset(parent, args, ctx, info) {
     const user = await ctx.db.query.user({ where: { email: args.email } });
     if (!user) {
-      throw new Error(`No user found with email: ${args.email}`);
+      throw new Error(`No user found with that email.`);
     }
 
     const randomBytesPromisified = promisify(randomBytes);

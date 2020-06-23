@@ -54,7 +54,7 @@ class Signin extends Component {
                 <input
                   type="email"
                   name="email"
-                  placeholder="Email"
+                  placeholder="email@example.com"
                   value={this.state.email}
                   onChange={this.saveToState}
                 />
