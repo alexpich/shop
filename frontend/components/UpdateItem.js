@@ -66,17 +66,11 @@ class UpdateItem extends Component {
           return (
             <Mutation mutation={UPDATE_ITEM_MUTATION} variables={this.state}>
               {(updateItem, { loading, error }) => (
-                // <Form
-                //   onSubmit={async (e) => {
-                //     e.preventDefault();
-                //     const res = await updateItem();
-                //     Router.push({
-                //       pathname: "/item",
-                //       query: { id: res.data.updateItem.id },
-                //     });
-                //   }}
-                // >
-                <Form onSubmit={(e) => this.updateItem(e, updateItem)}>
+                <Form
+                  onSubmit={async (e) => {
+                    this.updateItem(e, updateItem);
+                  }}
+                >
                   <ErrorMessage error={error} />
                   <fieldset disabled={loading} aria-busy={loading}>
                     {/* TODO: Handle update image */}

@@ -33,7 +33,16 @@ const Mutations = {
   updateItem(parent, args, ctx, info) {
     const updates = { ...args };
 
+    // check if have the permissions
+    const hasPermissions = ctx.request.user.permissions.some((permission) =>
+      ["ADMIN", "ITEMUPDATE"].includes(permission)
+    );
+
     delete updates.id;
+
+    if (!hasPermissions) {
+      throw new Error("You have insufficient permissions to do that.");
+    }
 
     return ctx.db.mutation.updateItem(
       {
