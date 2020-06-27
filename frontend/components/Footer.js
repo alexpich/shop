@@ -1,48 +1,6 @@
 import React, { Component } from "react";
-import styled from "styled-components";
 import Link from "next/link";
-
-const FooterStyles = styled.div`
-  background: ${(props) => props.theme.offWhite};
-  color: ${(props) => props.theme.darkGrey};
-  text-align: center;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  padding: 3rem 1rem;
-  h3 {
-    font-size: 1.4rem;
-    line-height: 1.6;
-    margin: 0;
-    padding: 0;
-  }
-  ul {
-    margin: 0;
-    padding: 0;
-    li {
-      list-style: none;
-      line-height: 1.6;
-      a {
-        color: ${(props) => props.theme.darkGrey};
-        font-size: 1.25rem;
-        &:before {
-          content: "";
-          position: absolute;
-          width: 100%;
-          height: 0;
-          bottom: 0;
-          left: 0;
-          background-color: #fff;
-          visibility: hidden;
-          transition: all 0.3s ease-in-out;
-          &:hover {
-            visibility: visible;
-            height: 3px;
-          }
-        }
-      }
-    }
-  }
-`;
+import FooterStyles from "./styles/FooterStyles";
 
 const Footer = (props) => {
   return (

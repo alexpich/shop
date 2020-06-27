@@ -23,14 +23,16 @@ const OrderStyles = styled.div`
     border-bottom: 1px solid ${(props) => props.theme.offWhite};
     display: grid;
     grid-template-columns: 300px 1fr;
-    align-items: center;
     grid-gap: 2rem;
     margin: 2rem 0;
     padding-bottom: 2rem;
     img {
       width: 100%;
-      height: 200px;
       object-fit: contain;
+    }
+    h2,
+    p {
+      margin: 0;
     }
   }
 `;
